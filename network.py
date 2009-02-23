@@ -15,13 +15,18 @@ random.seed(0)
 
 HIGH = 1  # high value for a neuron activation
 LOW = 0  # low value for a neuron activation
+THREASHOLD = 0.5  # threashold value for neuron activation
 
 class network:
-	"""Neural network with an input and output layer, and a hidden network"""
+	"""
+	Neural network with an input and output layer, and a hidden network
+	"""
 	
 	def __init__(self, ni, nh, no):
-		"""Creates a new network with ni input nodes, nh hidden nodes,
-		and no output nodes"""
+		"""
+		Creates a new network with ni input nodes, nh hidden nodes,
+		and no output nodes
+		"""
 		
 		self.ni = ni + 1  # +1 for the bias node (to be replaced in the future)
 		self.nh = nh
@@ -36,8 +41,8 @@ class network:
 		self.ao.fill(LOW)
 		
 		# create the weight matrices and set them to random values
-		self.wi = random.rand(self.ni, self.nh)
-		self.wo = random.rand(self.nh, self.no)
+		self.wi = random.rand(self.nh, self.ni)
+		self.wo = random.rand(self.no, self.nh)
 		
 		# create hidden weight matrix, a symmetric matrix with all diagonal
 		# entries equal to zero
@@ -45,6 +50,17 @@ class network:
 		self.wh.fill(0)
 		
 	def update(self, inputs):
+		"""
+		Updates the value of the neuron activations based on the given input
+		"""
 		
 		if len(inputs) != self.ni - 1:
 			raise ValueError, "wrong number of inputs"
+		
+		# set input activations (assumes that inputs are either LOW or HIGH)
+		for c, v in enumerate(input):
+			self.ai[c] = v
+			
+		# set hidden node activations
+		self.ah = np.dot(self.wi, self.ai)
+			
