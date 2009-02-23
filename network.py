@@ -9,11 +9,12 @@
 #		- NumPy
 
 import numpy as np
+from numpy import random
+
+random.seed(0)
 
 HIGH = 1  # high value for a neuron activation
 LOW = 0  # low value for a neuron activation
-
-################################################################################
 
 class network:
 	"""Neural network with an input and output layer, and a hidden network"""
@@ -29,22 +30,21 @@ class network:
 		# create the neuron activations and set them to the low value
 		self.ai = np.ndarray(self.ni, int)
 		self.ah = np.ndarray(self.nh, int)
-################################################################################
 		self.ao = np.ndarray(self.no, int)
 		self.ai.fill(LOW)
 		self.ah.fill(LOW)
 		self.ao.fill(LOW)
 		
-		# create the weight matrices and set them all to zero
-		self.wi = np.ndarray( (self.ni, self.nh) )
-		self.wo = np.ndarray( (self.nh, self.no) )
-		self.wi.fill(0)
-		self.wo.fill(0)
+		# create the weight matrices and set them to random values
+		self.wi = random.rand(self.ni, self.nh)
+		self.wo = random.rand(self.nh, self.no)
 		
 		# create hidden weight matrix, a symmetric matrix with all diagonal
 		# entries equal to zero
 		self.wh = np.ndarray( (self.nh, self.nh) )
-################################################################################
 		self.wh.fill(0)
 		
+	def update(self, inputs):
 		
+		if len(inputs) != self.ni - 1:
+			raise ValueError, "wrong number of inputs"
