@@ -8,6 +8,11 @@
 #		- Python 2.4.x or 2.5.x
 #		- NumPy
 
+"""network.py is a module created for developing neural networks for research
+purposes in python.  It defines a network class that creates a syrcronous,
+feedback enabled neural network used to test training methods."""
+
+
 import numpy as np
 from numpy import random
 
@@ -18,15 +23,11 @@ LOW = 0  # low value for a neuron activation
 THREASHOLD = 0.5  # threashold value for neuron activation
 
 class network:
-	"""
-	Neural network with an input and output layer, and a hidden network
-	"""
+	"""Neural network with an input and output layer, and a hidden network"""
 	
 	def __init__(self, ni, nh, no):
-		"""
-		Creates a new network with ni input nodes, nh hidden nodes,
-		and no output nodes
-		"""
+		"""Creates a new network with ni input nodes, nh hidden nodes,
+		and no output nodes"""
 		
 		self.ni = ni + 1  # +1 for the bias node (to be replaced in the future)
 		self.nh = nh
@@ -49,18 +50,33 @@ class network:
 		self.wh = np.ndarray( (self.nh, self.nh) )
 		self.wh.fill(0)
 		
+		for i in xrange(self.nh):
+			for j in xrange(i+1, self.nh):
+				self.wh[i,j] = self.wh[j,i] = random.rand()
+		
 	def update(self, inputs):
-		"""
-		Updates the value of the neuron activations based on the given input
-		"""
+		"""Updates the value of the neuron activations based on the given
+		input"""
 		
 		if len(inputs) != self.ni - 1:
 			raise ValueError, "wrong number of inputs"
 		
-		# set input activations (assumes that inputs are either LOW or HIGH)
-		for c, v in enumerate(input):
+		# set input node activations
+		# (assumes that inputs are either LOW or HIGH)
+		for c, v in enumerate(inputs):
 			self.ai[c] = v
 			
 		# set hidden node activations
-		self.ah = np.dot(self.wi, self.ai)
-			
+		self.ah = self.sigmoid(np.dot(self.wi, self.ai)
+						+ np.dot(self.wh, self.ah))
+		
+		# set output node activations
+		self.ao = self.sigmoid(np.dot(self.wo, self.ah))
+		
+		return self.ao
+	
+	def sigmoid(self, x):
+		"""sigmoid function for node activations.  based on input, outputs
+		a number between 0 and 1"""
+		
+		return np.tanh(x)
