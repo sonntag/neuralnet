@@ -22,7 +22,7 @@ HIGH = 1  # high value for a neuron activation
 LOW = 0  # low value for a neuron activation
 THREASHOLD = 0.5  # threashold value for neuron activation
 
-class network:
+class network (object):
 	"""Neural network with an input and output layer, and a hidden network"""
 	
 	def __init__(self, ni, nh, no):
