@@ -79,4 +79,4 @@ class network:
 		"""sigmoid function for node activations.  based on input, outputs
 		a number between 0 and 1"""
 		
-		return np.tanh(x)
+		return np.tanh(2 * x)
