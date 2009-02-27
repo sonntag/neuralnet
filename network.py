@@ -18,10 +18,6 @@ from numpy import random
 
 random.seed(0)
 
-HIGH = 1  # high value for a neuron activation
-LOW = 0  # low value for a neuron activation
-THREASHOLD = 0.5  # threashold value for neuron activation
-
 class network (object):
 	"""Neural network with an input and output layer, and a hidden network"""
 	
@@ -62,21 +58,16 @@ class network (object):
 			raise ValueError, "wrong number of inputs"
 		
 		# set input node activations
-		# (assumes that inputs are either LOW or HIGH)
 		for c, v in enumerate(inputs):
 			self.ai[c] = v
 			
 		# set hidden node activations
-		self.ah = self.sigmoid(np.dot(self.wi, self.ai)
-						+ np.dot(self.wh, self.ah))
+		#self.ah = self.sigmoid(np.dot(self.wi, self.ai)
+		#				+ np.dot(self.wh, self.ah))
+		for n in self.ah:
+			n.update(
 		
 		# set output node activations
-		self.ao = self.sigmoid(np.dot(self.wo, self.ah))
+		#self.ao = self.sigmoid(np.dot(self.wo, self.ah))
 		
 		return self.ao
-	
-	def sigmoid(self, x):
-		"""sigmoid function for node activations.  based on input, outputs
-		a number between 0 and 1"""
-		
-		return np.tanh(x)
