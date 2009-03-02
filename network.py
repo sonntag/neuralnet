@@ -15,14 +15,11 @@ feedback enabled neural network used to test training methods."""
 
 import numpy as np
 from numpy import random
+from node import node
 
 random.seed(0)
 
-HIGH = 1  # high value for a neuron activation
-LOW = 0  # low value for a neuron activation
-THREASHOLD = 0.5  # threashold value for neuron activation
-
-class network:
+class network (object):
 	"""Neural network with an input and output layer, and a hidden network"""
 	
 	def __init__(self, ni, nh, no):
@@ -33,13 +30,13 @@ class network:
 		self.nh = nh
 		self.no = no
 		
-		# create the neuron activations and set them to the low value
-		self.ai = np.ndarray(self.ni, int)
-		self.ah = np.ndarray(self.nh, int)
-		self.ao = np.ndarray(self.no, int)
-		self.ai.fill(LOW)
-		self.ah.fill(LOW)
-		self.ao.fill(LOW)
+		# create the node objects
+		self.ai = np.ndarray(self.ni, object)
+		self.ah = np.ndarray(self.nh, object)
+		self.ao = np.ndarray(self.no, object)
+		for x in xrange(self.ni): self.ai[x] = node()
+		for x in xrange(self.nh): self.ah[x] = node()
+		for x in xrange(self.no): self.ao[x] = node()
 		
 		# create the weight matrices and set them to random values
 		self.wi = random.rand(self.nh, self.ni)
@@ -62,21 +59,16 @@ class network:
 			raise ValueError, "wrong number of inputs"
 		
 		# set input node activations
-		# (assumes that inputs are either LOW or HIGH)
 		for c, v in enumerate(inputs):
 			self.ai[c] = v
 			
 		# set hidden node activations
-		self.ah = self.sigmoid(np.dot(self.wi, self.ai)
-						+ np.dot(self.wh, self.ah))
+		for c, n in enumerate(self.ah):
+			n.update(np.dot(self.wi[c], self.ai)
+						+ np.dot(self.wh[c], self.ah))
 		
 		# set output node activations
-		self.ao = self.sigmoid(np.dot(self.wo, self.ah))
+		for c, n in enumerate(self.ao):
+			n.update(np.dot(self.wo[c], self.ah))
 		
 		return self.ao
-	
-	def sigmoid(self, x):
-		"""sigmoid function for node activations.  based on input, outputs
-		a number between 0 and 1"""
-		
-		return np.tanh(2 * x)
