@@ -31,7 +31,10 @@ class node (object):
 		return np.tanh(x)
 	sigmoid = staticmethod(sigmoid)
 	
-	# operator overloads	
+	# operator overloads
+	# all operator overloads take in either a numeric value or a node
+	# object and return a numeric value
+
 	def __add__(self, x):
 		if isinstance(x, type(self)):
 			return self.activation + x.activation
@@ -55,3 +58,6 @@ class node (object):
 	
 	def __rmul__(self, x):
 		return self.activation * x
+	
+	def __str__(self):
+		return str(self.activation)
