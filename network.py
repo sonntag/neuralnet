@@ -16,6 +16,7 @@ feedback enabled neural network used to test training methods."""
 import numpy as np
 from numpy import random
 from node import node
+from edge import edge
 
 random.seed(0)
 
@@ -39,17 +40,24 @@ class network (object):
 		for x in xrange(self.no): self.ao[x] = node()
 		
 		# create the weight matrices and set them to random values
-		self.wi = random.rand(self.nh, self.ni)
-		self.wo = random.rand(self.no, self.nh)
+		#self.wi = random.rand(self.nh, self.ni)
+		#self.wo = random.rand(self.no, self.nh)
+		self.wi = np.ndarray( (self.nh, self.ni), object )
+		self.wo = np.ndarray( (self.no, self.nh), object )
+		for x in xrange(self.nh):
+			for y in xrange(self.ni):
+				self.wi[x,y] = edge(random.rand(), self.ah[x], self.ai[y])
+			for z in xrange(self.no):
+				self.wo[z,x] = edge(random.rand(), self.ao[z], self.ah[x])
 		
 		# create hidden weight matrix, a symmetric matrix with all diagonal
 		# entries equal to zero
-		self.wh = np.ndarray( (self.nh, self.nh) )
-		self.wh.fill(0)
+		self.wh = np.ndarray( (self.nh, self.nh), object )
 		
 		for i in xrange(self.nh):
-			for j in xrange(i+1, self.nh):
-				self.wh[i,j] = self.wh[j,i] = random.rand()
+			for j in xrange(i, self.nh):
+				if i == j: self.wh[i,j] = edge(0, self.ah[i], self.ah[j])
+				else: self.wh[i,j] = self.wh[j,i] = edge(random.rand(), self.ah[i], self.ah[j])
 		
 	def update(self, inputs):
 		"""Updates the value of the neuron activations based on the given
@@ -60,7 +68,7 @@ class network (object):
 		
 		# set input node activations
 		for c, v in enumerate(inputs):
-			self.ai[c] = v
+			self.ai[c] = node(v)
 			
 		# set hidden node activations
 		for c, n in enumerate(self.ah):
