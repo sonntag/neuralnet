@@ -40,8 +40,6 @@ class network (object):
 		for x in xrange(self.no): self.ao[x] = node()
 		
 		# create the weight matrices and set them to random values
-		#self.wi = random.rand(self.nh, self.ni)
-		#self.wo = random.rand(self.no, self.nh)
 		self.wi = np.ndarray( (self.nh, self.ni), object )
 		self.wo = np.ndarray( (self.no, self.nh), object )
 		for x in xrange(self.nh):
