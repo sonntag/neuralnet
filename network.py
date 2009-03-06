@@ -1,8 +1,6 @@
 # File: network.py
 # Copyright 2009 Justin Sonntag. All rights reserved.
 
-# Used bpnn.py by Neil Schemenauer as a reference
-
 # Written in Python.  See http://www.python.org/
 # Requirements:
 #		- Python 2.4.x or 2.5.x

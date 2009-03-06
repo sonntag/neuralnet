@@ -1,3 +1,6 @@
+# Modified from Recipe 266468 by Ivo Timmermans, 2004
+# http://code.activestate.com/recipes/266468/
+
 class abstractmethod (object):
 	pass
 			
