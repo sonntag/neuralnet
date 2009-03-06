@@ -12,11 +12,12 @@
 purposes in python.  It defines a network class that creates a syrcronous,
 feedback enabled neural network used to test training methods."""
 
+import autopath
 
 import numpy as np
 from numpy import random
-from node import node
-from edge import edge
+from neuralnet.node.node import node
+from neuralnet.edge.edge import edge
 
 random.seed(0)
 

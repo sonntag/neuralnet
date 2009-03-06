@@ -2,8 +2,9 @@
 # Copyright 2009 Justin Sonntag. All rights reserved.
 
 import numpy as np
+from absnode import absnode
 
-class node (object):
+class node (absnode):
 	"""node class to act as a neuron in a neural net.
 	
 	node class has an update method to update the node's activation level
@@ -14,9 +15,7 @@ class node (object):
 		"""Creates a new node object with activation a, low value 0,
 		and high value np.inf"""
 		
-		self.activation = a
-		self.low = l
-		self.high = h
+		super(node, self).__init__(a, l, h)
 	
 	def update(self, s):
 		"""updates the activation of the node based on an inputted sum s"""
