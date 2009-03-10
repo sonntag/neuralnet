@@ -14,8 +14,8 @@ import autopath
 
 import numpy as np
 from numpy import random
-from neuralnet.node.node import node
-from neuralnet.edge.edge import edge
+from neuralnet.node import pos_node as node
+from neuralnet.edge import bidirect_edge as edge
 
 random.seed(0)
 

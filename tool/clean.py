@@ -13,7 +13,7 @@ def main():
 	
 	def del_walker(arg, dirname, fnames):
 		for fn in fnames:
-			if fn.endswith(".pyc"):
+			if fn.endswith(".pyc") or fn.endswith("~"):
 				remove(join(dirname, fn))
 	
 	walk(autopath.nndir, del_walker, None)
