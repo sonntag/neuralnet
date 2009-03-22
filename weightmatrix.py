@@ -4,8 +4,7 @@
 import autopath
 
 import numpy as np
-from neuralnet.edge.edge import edge
 
 class weightmatrix (object):
 	
-	def __init__(self, i, j, 
+	def __init__(self, i, j)

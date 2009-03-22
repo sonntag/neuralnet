@@ -58,3 +58,17 @@ class pos_node (node):
 		return np.tanh(x)
 	activate = staticmethod(sigmoid)
 	
+class wave_node (node):
+	"""
+	node class that acts in the frequency space for calculation.
+	
+	each wave_node object has a frequency variable, a phase variable,
+	and an activation variable which is equal to the aplitude.
+	"""
+	
+	def __init__(self, a = 0.0, f = 10, p = 0.0):
+		super(self.__class__, self).__init__(a, None, None)
+		self.frequency = f
+		self.phase = p
+	
+	def update(self, 
